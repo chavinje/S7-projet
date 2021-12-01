@@ -24,14 +24,20 @@ https://support.bluestacks.com/hc/fr-fr/articles/115003174386-Comment-puis-je-ac
 Vous trouverez les reperoires/fichiers :
 
 * ./Vagrantfile : qui contient l'ensemble des déclarations pour la construction du Labs
-* scripts/install_sys.sh : exécuté lors de la création de toutes les VMs.
-* 
+* scripts/install_sys.sh : mise en place des configurations de base sur toutes les VMs
+* scripts/install_bdd.sh : Mise en place de la base de données mysql 
+* scripts/install_moodle.sh : Mise en place de l'application Moodle 
+* scripts/install_myadmin.sh : Mise en place de l'application PhpMyAdmin 
+* scripts/install_web.sh : Mise en place du serveur Apache2 
+
 
 ## Description du Labs
 
 Le labs est constitué de 1 machine virtuelle Virtualbox basé sur la box fr-bull-64
 Cette machine est reliée à votre machine réelle par un réseau privé hôte via l'adresse 192.168.56.80
 
+* L'application Moodle est accéssible par l'adresse http://192.168.56.80/moodle
+* L'application PhpMyAdmin est accéssible par l'adresse http://192.168.56.80/myadmin
 
 ## Utilisation des commandes vagrant
 
