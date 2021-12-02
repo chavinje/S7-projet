@@ -49,7 +49,7 @@ echo "Restarting Apache..."
 service apache2 restart
 
 cat <<EOF
-Service installed at http://192.168.5.80/moodle/
+Service installed at http://192.168.56.80/moodle/
 
 You will need to add a hosts file entry for:
 
