@@ -6,7 +6,6 @@ Vagrant.configure("2") do |config|
   config.vm.define "srv-web" do |machine|
     machine.vm.hostname = "srv-web"
     machine.vm.box = "chavinje/fr-bull-64"
-    #machine.vm.box_url = "chavinje/fr-bull-64"
     machine.vm.network :private_network, ip: "192.168.56.80"
     # Un repertoire partagé est un plus mais demande beaucoup plus
     # de travail - a voir à la fin
@@ -15,8 +14,8 @@ Vagrant.configure("2") do |config|
     machine.vm.provider :virtualbox do |v|
       v.customize ["modifyvm", :id, "--name", "srv-web"]
       v.customize ["modifyvm", :id, "--groups", "/S7-projet"]
-      v.customize ["modifyvm", :id, "--cpus", "1"]
-      v.customize ["modifyvm", :id, "--memory", 1024]
+      v.customize ["modifyvm", :id, "--cpus", "2"]
+      v.customize ["modifyvm", :id, "--memory", 2*1024]
       v.customize ["modifyvm", :id, "--natdnshostresolver1", "off"]
       v.customize ["modifyvm", :id, "--natdnsproxy1", "off"]
     end

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-## install server postgres
+## install Mariadb server (ex Mysql))
 
 IP=$(hostname -I | awk '{print $2}')
 APT_OPT="-o Dpkg::Progress-Fancy="0" -q -y"
