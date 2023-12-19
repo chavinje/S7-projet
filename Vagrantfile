@@ -20,7 +20,7 @@ Vagrant.configure("2") do |config|
       v.customize ["modifyvm", :id, "--natdnsproxy1", "off"]
     end
     config.vm.provision "shell", inline: <<-SHELL
-      sed -i 's/ChallengeResponseAuthentication no/ChallengeResponseAuthentication yes/g' /etc/ssh/sshd_config    
+      sed -i 's/ChallengeResponseAuthentication no/ChallengeResponseAuthentication yes/g' /etc/ssh/sshd_config
       sleep 3
       service ssh restart
     SHELL
