@@ -3,6 +3,7 @@
 
 Vagrant.configure("2") do |config|
   # Serveur virtuel de démonstration
+  #
   config.vm.define "srv-web" do |machine|
     machine.vm.hostname = "srv-web"
     machine.vm.box = "chavinje/fr-bull-64"
