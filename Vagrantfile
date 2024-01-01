@@ -49,6 +49,7 @@ Vagrant.configure("2") do |config|
 
     database.vm.provision "shell", path: "scripts/installation_Systeme_base_donnee.sh"
     database.vm.provision "shell", path: "scripts/install_bdd.sh"
+    database.vm.provision "shell", path: "scripts/MysqlDump.sh"
   end
 end
 
