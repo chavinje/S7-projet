@@ -23,30 +23,44 @@ mkdir /data
 mkdir $BACKUP_DIR
 touch $BACKUP_SCRIPT
 
-echo "=> [1]: Fichier $BACKUP_SCRIPT pour le backup..."
+echo "=> [2]: Fichier $BACKUP_SCRIPT pour le backup..."
 
 # Utilisation de printf pour écrire dans un fichier bash
+printf '#!/bin/bash\n\n' > $BACKUP_SCRIPT
+
 printf '# Répertoire de sauvegarde\n' > $BACKUP_SCRIPT
-printf 'BACKUP_DIR="/data/MysqlDump"\n' >> $BACKUP_SCRIPT
+printf 'BACKUP_DIR="/data/MysqlDump"\n\n' >> $BACKUP_SCRIPT
 
 printf '# Utilisateur et nom de la base de donnée\n' >> $BACKUP_SCRIPT
-printf 'DB_NAME="gestionLocative"\n' >> $BACKUP_SCRIPT
 printf 'DB_USER="admin"\n' >> $BACKUP_SCRIPT
 printf 'DB_PASSWD="network"\n\n' >> $BACKUP_SCRIPT
 
-printf '# Nom du fichier de sauvegarde (avec date)\n' >> $BACKUP_SCRIPT
-printf 'DATE=$(date "+%%d-%%m-%%Y_a_%%H:%%M:%%S")\n' >> $BACKUP_SCRIPT
-printf 'BACKUP_FILE="$BACKUP_DIR/$DB_NAME_$DATE.sql"\n\n' >> $BACKUP_SCRIPT
-
-printf '# Commande mysqldump pour sauvegarder la base de données\n' >> $BACKUP_SCRIPT
-printf 'mysqldump -u $DB_USER -p$DB_PASSWD $DB_NAME > $BACKUP_FILE\n\n' >> $BACKUP_SCRIPT
-
-printf '# Vérifier si la sauvegarde a été réalisée avec succès\n' >> $BACKUP_SCRIPT
-printf 'if [ $? -eq 0 ]; then\n' >> $BACKUP_SCRIPT
-printf '\techo "Sauvegarde de la base de données $DB_NAME effectuée avec succès dans $BACKUP_FILE"\n' >> $BACKUP_SCRIPT
-printf 'else\n' >> $BACKUP_SCRIPT
-printf '\techo "Il y a eu une erreur lors de la sauvegarde de la base de données $DB_NAME"\n' >> $BACKUP_SCRIPT
+printf '# Vérifier la préssence du repertoire $BACKUP_DIR\n' >> $BACKUP_SCRIPT
+printf 'if [ ! -d "$BACKUP_DIR" ]; then\n' >> $BACKUP_SCRIPT
+printf '\tmkdir -p "$BACKUP_DIR"\n' >> $BACKUP_SCRIPT
 printf 'fi\n\n' >> $BACKUP_SCRIPT
+
+printf '# Nom du fichier de sauvegarde (avec date)\n' >> $BACKUP_SCRIPT
+printf 'DATE=$(date "+%%d-%%m-%%Y_a_%%H:%%M:%%S")\n\n' >> $BACKUP_SCRIPT
+
+printf '# Vérifier la préssence du repertoire $BACKUP_DIR/$DATE\n' >> $BACKUP_SCRIPT
+printf 'if [ ! -d "$BACKUP_DIR/$DATE" ]; then\n' >> $BACKUP_SCRIPT
+printf '\tmkdir -p "$BACKUP_DIR/$DATE"\n' >> $BACKUP_SCRIPT
+printf 'fi\n' >> $BACKUP_SCRIPT
+
+#printf 'DATABASE=$(mysql -e "show databases;" | awk \'{if(NR>1) print})\'\n\n' >> $BACKUP_SCRIPT
+printf 'DATABASE=$(mysql -u admin -pnetwork -e "show databases;" -s --skip-column-names)\n\n' >> "$BACKUP_SCRIPT"
+
+printf 'for DB_NAME in $DATABASE; do\n' >> $BACKUP_SCRIPT
+printf '\t# Commande mysqldump pour sauvegarder la base de données\n' >> $BACKUP_SCRIPT
+printf '\tmysqldump -u $DB_USER -p$DB_PASSWD $DB_NAME > $BACKUP_DIR/$DATE/$DB_NAME.sql\n' >> $BACKUP_SCRIPT
+printf '\t# Vérifier si la sauvegarde a été réalisée avec succès\n' >> $BACKUP_SCRIPT
+printf '\tif [ $? -eq 0 ]; then\n' >> $BACKUP_SCRIPT
+printf '\t\techo "Sauvegarde de la base de données $DB_NAME effectuée avec succès dans $BACKUP_DIR"\n' >> $BACKUP_SCRIPT
+printf '\telse\n' >> $BACKUP_SCRIPT
+printf '\t\techo "Il y a eu une erreur lors de la sauvegarde de la base de données $DB_NAME"\n' >> $BACKUP_SCRIPT
+printf '\tfi\n' >> $BACKUP_SCRIPT
+printf 'done\n' >> $BACKUP_SCRIPT
 
 # Éditer temporairement le crontab
 TEMP_CRON=$(mktemp)
