@@ -22,6 +22,7 @@ apt-get install $APT_OPT \
   wget \
   gnupg \
   unzip \
+  curl \
   mariadb-client \
   >> $LOG_FILE 2>&1
 
