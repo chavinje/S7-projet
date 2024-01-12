@@ -3,7 +3,7 @@
 RAM = 1024
 
 Vagrant.configure("2") do |config|
-  # Serveur virtuel de démonstration
+  # Serveur virtuel de dï¿½monstration
 
 
 
@@ -14,14 +14,14 @@ Vagrant.configure("2") do |config|
     machinebdd.vm.network :private_network, ip: "192.168.56.81"
 
 
-    #Acces à la VM Web à distance
-    #machinebdd.vm.network "public_network", use_dhcp_assigned_default_route: true
+    #Acces ï¿½ la VM Web ï¿½ distance
+    machinebdd.vm.network "public_network", use_dhcp_assigned_default_route: true
     #machinebdd.vm.network "public_network", ip: "192.168.0.154"
 
 
 
-    # Un repertoire partagé est un plus mais demande beaucoup plus
-    # de travail - a voir à la fin
+    # Un repertoire partagï¿½ est un plus mais demande beaucoup plus
+    # de travail - a voir ï¿½ la fin
     machinebdd.vm.synced_folder "./data", "/vagrant_data", SharedFoldersEnableSymlinksCreate: false
 
     machinebdd.vm.provider :virtualbox do |vbdd|
@@ -33,8 +33,8 @@ Vagrant.configure("2") do |config|
       vbdd.customize ["modifyvm", :id, "--natdnsproxy1", "off"]
     end
 
-    #permet d'effectuer la connexion ssh de réduire le niveau de securite en mode ssh et de
-    #redescendre le cran du niveau de securite à cause de certains qui vont apparaitre
+    #permet d'effectuer la connexion ssh de rï¿½duire le niveau de securite en mode ssh et de
+    #redescendre le cran du niveau de securite ï¿½ cause de certains qui vont apparaitre
     machinebdd.vm.provision "shell", inline: <<-SHELL
       sed -i 's/ChallengeResponseAuthentication no/ChallengeResponseAuthentication yes/g' /etc/ssh/sshd_config
       sleep 3
@@ -61,12 +61,12 @@ Vagrant.configure("2") do |config|
       machineh.vm.box = "chavinje/fr-bull-64"
       #machine.vm.network :private_network, ip: "19.16.56.15"
 
-      #Acces à la VM Web à distance
-      #machine.vm.network "public_network", use_dhcp_assigned_default_route: true
+      #Acces ï¿½ la VM Web ï¿½ distance
+      machine.vm.network "public_network", use_dhcp_assigned_default_route: true
       #machine.vm.network "public_network", ip: "192.168.0.155"
 
-      # Un repertoire partagé est un plus mais demande beaucoup plus
-      # de travail - a voir à la fin
+      # Un repertoire partagï¿½ est un plus mais demande beaucoup plus
+      # de travail - a voir ï¿½ la fin
       machineh.vm.synced_folder "./data", "/vagrant_data", SharedFoldersEnableSymlinksCreate: false
 
       machineh.vm.provider :virtualbox do |v|
@@ -97,12 +97,12 @@ Vagrant.configure("2") do |config|
       machine.vm.box = "chavinje/fr-bull-64"
       machine.vm.network :private_network, ip: "192.168.56.80"
 
-      #Acces à la VM Web à distance
-      #machine.vm.network "public_network", use_dhcp_assigned_default_route: true
+      #Acces ï¿½ la VM Web ï¿½ distance
+      machine.vm.network "public_network", use_dhcp_assigned_default_route: true
       #machine.vm.network "public_network", ip: "192.168.0.155"
 
-      # Un repertoire partagé est un plus mais demande beaucoup plus
-      # de travail - a voir à la fin
+      # Un repertoire partagï¿½ est un plus mais demande beaucoup plus
+      # de travail - a voir ï¿½ la fin
       machine.vm.synced_folder "./data", "/vagrant_data", SharedFoldersEnableSymlinksCreate: false
 
       machine.vm.provider :virtualbox do |v|
