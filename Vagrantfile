@@ -79,7 +79,7 @@ Vagrant.configure("2") do |config|
       sleep 3
       service ssh restart
     SHELL
-    #ssh.vm.provision "shell", path: "scripts/ssh.sh"
+    ssh.vm.provision "shell", path: "scripts/reverse_proxy.sh"
     #ssh.vm.provision "shell", path: "scripts/proxy.sh"
   end
 end
