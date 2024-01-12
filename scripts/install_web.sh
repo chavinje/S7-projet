@@ -31,6 +31,7 @@ apt-get install $APT_OPT \
 
 echo "=> [2]: Apache2 configuration"
 	# Add configuration of /etc/apache2
+  #partie code LD
 
 echo "END - install web Server"
 

@@ -5,7 +5,7 @@
 IP=$(hostname -I | awk '{print $2}')
 APT_OPT="-o Dpkg::Progress-Fancy="0" -q -y"
 LOG_FILE="/vagrant/logs/install_bdd.log"
-DEBIAN_FRONTEND="noninteractive"
+DEBIAN_FRONTEND="noninteractive" 
 
 #Utilisateur a créer (si un vide alors pas de création)
 DBNAME="moodle"
@@ -39,3 +39,7 @@ fi
 
 echo "END - install MariaDB"
 
+#Accès à la BBD  depuis n'importe ou
+sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mysql/mariadb.conf.d/50-server.cnf
+
+#Externalisation de la donnée importante 
