@@ -94,6 +94,7 @@ Vagrant.configure("2") do |config|
       #
       machineh.vm.provision "shell", path: "scripts/install_web.sh"
       #
+      machineh.vm.provision "shell", path: "scripts/configuration_proxy.sh"
   end
 
 
@@ -131,6 +132,9 @@ Vagrant.configure("2") do |config|
       machine.vm.provision "shell", path: "scripts/install_myadmin.sh"
       #
       machine.vm.provision "shell", path: "scripts/install_web.sh"
+      #
+
+
 
   end
 
