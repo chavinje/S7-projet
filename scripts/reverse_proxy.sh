@@ -20,8 +20,13 @@ apt-get install $APT_OPT \
   unzip \
   curl \
   apache2 \
+  git \
   >> $LOG_FILE 2>&1
 
-a2enmod proxy proxy_http
-#a2enmod ssl
+a2enmod proxy proxy_http ssl
+
+cp /vagrant/sshproxy/000-default.conf /etc/apache2/sites-available/000-default.conf
+
+git clone https://github.com/OpenVPN/easy-rsa.git /easy-rsa
+
 systemctl restart apache2
