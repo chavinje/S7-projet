@@ -42,21 +42,23 @@ randomBlowfishSecret=$(openssl rand -base64 32)
 sed -e "s|cfg\['blowfish_secret'\] = ''|cfg['blowfish_secret'] = '$randomBlowfishSecret'|" \
   ${WWW_REP}/myadmin/config.sample.inc.php \
   > ${WWW_REP}/myadmin/config.inc.php
+sed -i 's/localhost/192.168.56.12/g' ${WWW_REP}/myadmin/config.inc.php \ 
+  >> $LOG_FILE 2>&1
 
 mysql -e "CREATE DATABASE phpmyadmin"
-mysql -e "GRANT ALL PRIVILEGES ON phpmyadmin.* TO 'pma'@'localhost' IDENTIFIED BY 'pmapass'"
+mysql -e "GRANT ALL PRIVILEGES ON phpmyadmin.* TO 'admin'@'localhost' IDENTIFIED BY 'network'"
 mysql < ${WWW_REP}/myadmin/sql/create_tables.sql 
 
 echo "[4] Restarting Apache..."
 service apache2 restart
 
 cat <<EOF
-Service installed at http://192.168.56.80/myadmin/
+Service installed at http://192.168.56.12/myadmin/
 
 You will need to add a hosts file entry for:
 
-username: pma
-password: pmapass
+username: admin
+password: network
 
 EOF
 
