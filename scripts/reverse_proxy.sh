@@ -26,7 +26,7 @@ apt-get install $APT_OPT \
 
 a2enmod proxy proxy_http ssl
 
-openssl enpkey -algorithm RSA -out lagence.pem -aes256 -pass pass:network
+openssl genpkey -algorithm RSA -out lagence.pem -aes256 -pass pass:network
 
 openssl req -new -key /etc/ssl/certs/lagence.pem -out /etc/ssl/certs/lagence.csr -passin pass:network -subj "/C=FR/ST=France/L=Angers/O=Organization/OU=Organizational Unit/CN=192.168.56.10"
 
@@ -44,3 +44,28 @@ systemctl restart apache2
 ssh-keygen -t rsa -b 2048 -f ~/.ssh/id_rsa -q -N ""
 
 cp ~/.ssh/id_rsa.pub /vagrant/authorized_keys
+
+#bastion
+
+sed -i 's/#GatewayPorts no/GatewayPorts yes/g' /etc/ssh/sshd_config
+
+touch ~/.ssh/config
+
+printf 'Host bastion\n' > ~/.ssh/config
+printf '\tHostName 192.168.56.14\n' >> ~/.ssh/config
+printf '\tUser root\n' >> ~/.ssh/config
+printf '\tIdentityFile ~/.ssh/id_rsa\n\n' >> ~/.ssh/config
+
+printf 'Host server-web\n' >> ~/.ssh/config
+printf '\tHostName 192.168.56.10\n' >> ~/.ssh/config
+printf '\tUser root\n' >> ~/.ssh/config
+printf '\tIdentityFile ~/.ssh/id_rsa\n' >> ~/.ssh/config
+printf '\tProxyJump bastion\n\n' >> ~/.ssh/config
+
+printf 'Host database-server\n' >> ~/.ssh/config
+printf '\tHostName 192.168.56.12\n' >> ~/.ssh/config
+printf '\tUser root\n' >> ~/.ssh/config
+printf '\tIdentityFile ~/.ssh/id_rsa\n' >> ~/.ssh/config
+printf '\tProxyJump bastion\n' >> ~/.ssh/config
+
+service ssh restart

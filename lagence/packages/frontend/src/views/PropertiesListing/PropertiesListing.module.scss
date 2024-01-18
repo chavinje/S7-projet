@@ -1,0 +1,41 @@
+@import '../../index.scss';
+
+.container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.propertiesGrid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-gap: 20px;
+}
+
+.listHeader {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.filtersButton {
+  visibility: hidden;
+}
+
+.message {
+  margin-top: 20px;
+  text-align: center;
+  grid-column: 1 / -1;
+}
+
+@media screen and (max-width: $mobileSize) {
+  .propertiesGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .filtersButton {
+    // display: block;
+    visibility: visible;
+  }
+}

@@ -1,0 +1,56 @@
+.container {
+  position: relative;
+
+  label {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+  }
+
+  input[type='checkbox'] {
+    /* removing default appearance */
+    -webkit-appearance: none;
+    appearance: none;
+    /* creating a custom design */
+    width: 16px;
+    height: 16px;
+    border-radius: 5px;
+    margin-right: 10px;
+    display: block;
+    border: 1px solid #b6b6b6;
+    outline: none;
+    cursor: pointer;
+
+    transition: 200ms ease-in-out;
+
+    &:disabled {
+      border-color: #c0c0c0;
+      background-color: #c0c0c0;
+    }
+
+    &:disabled + span {
+      color: #c0c0c0;
+    }
+
+    &:checked {
+      background-color: var(--primaryColor);
+      position: relative;
+      border-color: transparent;
+    }
+  }
+
+  input[type='checkbox']:checked + .icon {
+    opacity: 1;
+  }
+
+  .icon {
+    opacity: 0;
+    position: absolute;
+    font-size: 11px;
+    top: 4px;
+    left: 3px;
+    color: white;
+    pointer-events: none;
+  }
+}

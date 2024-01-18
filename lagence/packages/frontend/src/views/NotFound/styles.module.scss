@@ -1,0 +1,17 @@
+.notFound {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  color: var(--primaryColor);
+  img {
+    width: 300px;
+  }
+  .title {
+    font-size: 4rem;
+  }
+  .message {
+    font-size: 1.5rem;
+  }
+}

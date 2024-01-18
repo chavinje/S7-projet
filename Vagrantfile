@@ -8,7 +8,7 @@ Vagrant.configure("2") do |config|
     ssh.vm.hostname = "ssh-https"
     ssh.vm.box = "chavinje/fr-bull-64"
     ssh.vm.network :private_network, ip: "192.168.56.14"
-    ssh.vm.network "public_network", use_dhcp_assigned_default_route: true
+    #ssh.vm.network "public_network", use_dhcp_assigned_default_route: true
 
     ssh.vm.provider :virtualbox do |v|
       v.customize ["modifyvm", :id, "--name", "ssh-https"]

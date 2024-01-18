@@ -1,0 +1,38 @@
+.selector {
+  display: flex;
+
+  .selection {
+    input {
+      display: none;
+    }
+
+    label {
+      outline: transparent;
+
+      background-color: #fff;
+      border: 2px solid transparent;
+      cursor: pointer;
+      display: inline-block;
+      color: var(--headings-color);
+      font-family: var(--title-font-family);
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 26px;
+      outline: 1px solid var(--borderColor);
+      margin-right: 1px;
+      padding: 7px 12px;
+    }
+
+    & input[type='radio']:checked ~ label {
+      border: 2px solid var(--darkColor);
+    }
+
+    &:first-child label {
+      border-radius: 12px 0 0 12px;
+    }
+
+    &:last-child label {
+      border-radius: 0 12px 12px 0;
+    }
+  }
+}
