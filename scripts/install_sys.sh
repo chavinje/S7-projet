@@ -4,8 +4,10 @@
 
 IP=$(hostname -I | awk '{print $2}')
 #Utilisateur a créer (si vide pas de création)
-NOM=""
-MDP=""
+#NOM="dev"
+#MDP="dev"
+NOM="dev"
+MDP="dev"
 HDIR=""
 
 APT_OPT="-o Dpkg::Progress-Fancy="0" -q -y"
