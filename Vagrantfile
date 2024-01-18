@@ -12,16 +12,7 @@ Vagrant.configure("2") do |config|
     machinebdd.vm.hostname = "srv-database"
     machinebdd.vm.box = "chavinje/fr-bull-64"
     machinebdd.vm.network :private_network, ip: "192.168.56.81"
-
-
-    #Acces à la VM Web à distance
-    #machinebdd.vm.network "public_network", use_dhcp_assigned_default_route: true
-
-      #peut creer un conflit si cette adresse ip est déjà assigné à une personne
-      #machinebdd.vm.network "public_network", ip: "*.*.*.*"
-
-
-
+    machine.vm.network "forwarded_port", guest: 3306, host: 8069
     # Un repertoire partagée est un plus mais demande beaucoup plus
     # de travail - a voir à la fin
     machinebdd.vm.synced_folder "./data", "/vagrant_data", SharedFoldersEnableSymlinksCreate: false
@@ -64,9 +55,7 @@ Vagrant.configure("2") do |config|
       machineh.vm.network :private_network, ip: "192.168.56.82"
 
       #Acces � la VM Web � distance
-      #machine.vm.network "public_network", use_dhcp_assigned_default_route: true
-
-      #machine.vm.network "public_network", ip: "192.168.0.155"
+      machineh.vm.network "public_network", use_dhcp_assigned_default_route: true
 
       # Un repertoire partag� est un plus mais demande beaucoup plus
       # de travail - a voir � la fin
@@ -105,7 +94,10 @@ Vagrant.configure("2") do |config|
 
       #Acces � la VM Web � distance
       #machine.vm.network "public_network", use_dhcp_assigned_default_route: true
-      #machine.vm.network "public_network", ip: "192.168.0.155"
+
+      #peut creer un conflit si cette adresse ip est déjà assigné à une personne
+      #machine.vm.network "public_network", ip: "*.*.*.*"
+
 
       # Un repertoire partag� est un plus mais demande beaucoup plus
       # de travail - a voir � la fin
@@ -133,6 +125,7 @@ Vagrant.configure("2") do |config|
       #
       machine.vm.provision "shell", path: "scripts/install_web.sh"
       #
+      #machine.vm.provision "shell", path: "scripts/provision.sh"
 
 
 
