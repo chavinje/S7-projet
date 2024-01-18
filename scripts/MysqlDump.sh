@@ -5,7 +5,7 @@ LOG_FILE="/vagrant/logs/MysqlDump.log"
 DEBIAN_FRONTEND="noninteractive"
 
 # Utilisateur et nom de la base de donnée
-DB_NAME="GestionLocative"
+DB_NAME="lagence"
 DB_USER="admin"
 DB_PASSWD="network"
 
@@ -32,7 +32,7 @@ printf '# Répertoire de sauvegarde\n' > $BACKUP_SCRIPT
 printf 'BACKUP_DIR="/data/MysqlDump"\n\n' >> $BACKUP_SCRIPT
 
 printf '# Utilisateur et nom de la base de donnée\n' >> $BACKUP_SCRIPT
-printf 'DB_NAME="GestionLocative"\n\n' >> $BACKUP_SCRIPT
+printf 'DB_NAME="lagence"\n\n' >> $BACKUP_SCRIPT
 printf 'DB_USER="admin"\n' >> $BACKUP_SCRIPT
 printf 'DB_PASSWD="network"\n\n' >> $BACKUP_SCRIPT
 

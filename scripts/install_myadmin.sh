@@ -46,7 +46,7 @@ sed -i 's/localhost/192.168.56.12/g' ${WWW_REP}/myadmin/config.inc.php \
   >> $LOG_FILE 2>&1
 
 mysql -e "CREATE DATABASE phpmyadmin"
-mysql -e "GRANT ALL PRIVILEGES ON phpmyadmin.* TO 'admin'@'localhost' IDENTIFIED BY 'network'"
+mysql -e "GRANT ALL PRIVILEGES ON phpmyadmin.* TO 'admin'@'192.168.56.12' IDENTIFIED BY 'network'"
 mysql < ${WWW_REP}/myadmin/sql/create_tables.sql 
 
 echo "[4] Restarting Apache..."
@@ -61,5 +61,7 @@ username: admin
 password: network
 
 EOF
+
+cp -r /var/www/html/myadmin /var/www/html/frontend/
 
 echo "END - Configuration phpMyAdmin"

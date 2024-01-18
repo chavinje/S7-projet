@@ -19,14 +19,28 @@ apt-get install $APT_OPT \
   gnupg \
   unzip \
   curl \
+  openssl \
   apache2 \
   git \
   >> $LOG_FILE 2>&1
 
 a2enmod proxy proxy_http ssl
 
+openssl enpkey -algorithm RSA -out lagence.pem -aes256 -pass pass:network
+
+openssl req -new -key /etc/ssl/certs/lagence.pem -out /etc/ssl/certs/lagence.csr -passin pass:network -subj "/C=FR/ST=France/L=Angers/O=Organization/OU=Organizational Unit/CN=192.168.56.10"
+
+openssl x509 -req -in /etc/ssl/certs/lagence.csr -signkey /etc/ssl/certs/lagence.pem -out /etc/ssl/certs/lagence.crt -passin pass:network 
+
 cp /vagrant/sshproxy/000-default.conf /etc/apache2/sites-available/000-default.conf
 
-git clone https://github.com/OpenVPN/easy-rsa.git /easy-rsa
+sed -i 's/ssl-cert-snakeoil/lagence/g' /etc/apache2/sites-available/default-ssl.conf 
+sed -i 's/private\/lagence.key/certs\/lagence.crt/g' /etc/apache2/sites-available/default-ssl.conf 
+
+#git clone https://github.com/OpenVPN/easy-rsa.git /easy-rsa
 
 systemctl restart apache2
+
+ssh-keygen -t rsa -b 2048 -f ~/.ssh/id_rsa -q -N ""
+
+cp ~/.ssh/id_rsa.pub /vagrant/authorized_keys

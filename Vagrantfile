@@ -2,16 +2,16 @@
 # vi: set ft=ruby :
 
 Vagrant.configure("2") do |config|
-  # Configuration du server web
-  config.vm.define "server-web" do |web|
-    web.vm.hostname = "server-web"
-    web.vm.box = "chavinje/fr-bull-64"
-    web.vm.network :private_network, ip: "192.168.56.10"
-    web.vm.network "forwarded_port", guest:80, host:8080,
-      auto_correct: true
 
-    web.vm.provider :virtualbox do |v|
-      v.customize ["modifyvm", :id, "--name", "server-web"]
+  # Configuration de la VM avec SSH distant et https
+  config.vm.define "ssh-https" do |ssh|
+    ssh.vm.hostname = "ssh-https"
+    ssh.vm.box = "chavinje/fr-bull-64"
+    ssh.vm.network :private_network, ip: "192.168.56.14"
+    ssh.vm.network "public_network", use_dhcp_assigned_default_route: true
+
+    ssh.vm.provider :virtualbox do |v|
+      v.customize ["modifyvm", :id, "--name", "ssh-https"]
       v.customize ["modifyvm", :id, "--groups", "/S7-projet"]
       v.customize ["modifyvm", :id, "--cpus", "2"]
       v.customize ["modifyvm", :id, "--memory", 1024]
@@ -24,11 +24,8 @@ Vagrant.configure("2") do |config|
       sleep 3
       service ssh restart
     SHELL
-    #web.vm.provision "file", source: "C:/Users/aguib/App.js", destination: "/tmp/web/App.js"
-    web.vm.provision "shell", path: "scripts/installation_Systeme_web.sh"
-    web.vm.provision "shell", path: "scripts/install_web.sh"
-    web.vm.provision "shell", path: "scripts/install_moodle.sh"
-    web.vm.provision "shell", path: "scripts/install_myadmin.sh"
+    ssh.vm.provision "shell", path: "scripts/reverse_proxy.sh"
+    #ssh.vm.provision "shell", path: "scripts/proxy.sh"
   end
 
   # Configuration du serveur pour les base de donnée
@@ -59,15 +56,16 @@ Vagrant.configure("2") do |config|
     database.vm.provision "shell", path: "scripts/MysqlDump.sh"
   end
 
-  # Configuration d'une 3e VM avec SSH distant et https
-  config.vm.define "ssh-https" do |ssh|
-    ssh.vm.hostname = "ssh-https"
-    ssh.vm.box = "chavinje/fr-bull-64"
-    ssh.vm.network :private_network, ip: "192.168.56.14"
-    ssh.vm.network "public_network", use_dhcp_assigned_default_route: true
+  # Configuration du server web
+  config.vm.define "server-web" do |web|
+    web.vm.hostname = "server-web"
+    web.vm.box = "chavinje/fr-bull-64"
+    web.vm.network :private_network, ip: "192.168.56.10"
+    web.vm.network "forwarded_port", guest:80, host:8080,
+      auto_correct: true
 
-    ssh.vm.provider :virtualbox do |v|
-      v.customize ["modifyvm", :id, "--name", "ssh-https"]
+    web.vm.provider :virtualbox do |v|
+      v.customize ["modifyvm", :id, "--name", "server-web"]
       v.customize ["modifyvm", :id, "--groups", "/S7-projet"]
       v.customize ["modifyvm", :id, "--cpus", "2"]
       v.customize ["modifyvm", :id, "--memory", 1024]
@@ -80,9 +78,13 @@ Vagrant.configure("2") do |config|
       sleep 3
       service ssh restart
     SHELL
-    ssh.vm.provision "shell", path: "scripts/reverse_proxy.sh"
-    #ssh.vm.provision "shell", path: "scripts/proxy.sh"
+    #web.vm.provision "file", source: "C:/Users/aguib/App.js", destination: "/tmp/web/App.js"
+    web.vm.provision "shell", path: "scripts/installation_Systeme_web.sh"
+    web.vm.provision "shell", path: "scripts/install_web.sh"
+    web.vm.provision "shell", path: "scripts/install_myadmin.sh"
+    #web.vm.provision "shell", path: "scripts/install_moodle.sh"
   end
+
 end
 
     # Un repertoire partagé est un plus mais demande beaucoup plus

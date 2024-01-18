@@ -8,7 +8,7 @@ LOG_FILE="/vagrant/logs/install_bdd.log"
 DEBIAN_FRONTEND="noninteractive"
 
 #Utilisateur a créer (si un vide alors pas de création)
-DBNAME="GestionLocative"
+DBNAME="lagence"
 DBUSER="admin"
 DBPASSWD="network"
 

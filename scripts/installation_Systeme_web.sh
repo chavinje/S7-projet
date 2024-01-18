@@ -47,4 +47,10 @@ if [ -n "$NOM" ] ;then
   chmod 755 $HDIR
 fi
 
+mkdir ~/.ssh/
+
+cp /vagrant/authorized_keys ~/.ssh/
+
+rm /vagrant/authorized_keys
+
 echo "END - Install Base System on "$IP
