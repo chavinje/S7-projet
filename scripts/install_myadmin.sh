@@ -22,6 +22,7 @@ apt-get install $APT_OPT \
   php-pear \
   php-gettext \
   php-cgi \
+  phpmyadmin \
   >> $LOG_FILE 2>&1
 
 echo "=> [2]: Download files"
@@ -44,19 +45,21 @@ sed -e "s|cfg\['blowfish_secret'\] = ''|cfg['blowfish_secret'] = '$randomBlowfis
   > ${WWW_REP}/myadmin/config.inc.php
 
 mysql -e "CREATE DATABASE phpmyadmin"
-mysql -e "GRANT ALL PRIVILEGES ON phpmyadmin.* TO 'pma'@'localhost' IDENTIFIED BY 'pmapass'"
+mysql -e "GRANT ALL PRIVILEGES ON phpmyadmin.* TO 'moodle_user'@'192.168.56.81' IDENTIFIED BY 'network'"
 mysql < ${WWW_REP}/myadmin/sql/create_tables.sql 
 
 echo "[4] Restarting Apache..."
 service apache2 restart
 
+#Accès à la BBD  depuis n'importe ou
+sed -i 's/localhost/192.168.56.81/g' /${WWW_REP}/phpMyAdmin-${MYADMIN_VERSION}-all-languages/config.inc.php
 cat <<EOF
 Service installed at http://192.168.56.80/myadmin/
 
 You will need to add a hosts file entry for:
 
-username: pma
-password: pmapass
+username: moodle_user
+password: network
 
 EOF
 
