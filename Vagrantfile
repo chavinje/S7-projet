@@ -12,7 +12,7 @@ Vagrant.configure("2") do |config|
     machinebdd.vm.hostname = "srv-database"
     machinebdd.vm.box = "chavinje/fr-bull-64"
     machinebdd.vm.network :private_network, ip: "192.168.56.81"
-    machine.vm.network "forwarded_port", guest: 3306, host: 8069
+    machinebdd.vm.network "forwarded_port", guest: 3306, host: 8069
     # Un repertoire partagée est un plus mais demande beaucoup plus
     # de travail - a voir à la fin
     machinebdd.vm.synced_folder "./data", "/vagrant_data", SharedFoldersEnableSymlinksCreate: false
@@ -43,6 +43,9 @@ Vagrant.configure("2") do |config|
     machinebdd.vm.provision "shell", path: "scripts/install_myadmin.sh"
     #
     machinebdd.vm.provision "shell", path: "scripts/install_web.sh"
+    #
+    machinebdd.vm.provision "shell", path: "scripts/utilisateur.sh"
+
 
 
 
@@ -55,7 +58,7 @@ Vagrant.configure("2") do |config|
       machineh.vm.network :private_network, ip: "192.168.56.82"
 
       #Acces � la VM Web � distance
-      machineh.vm.network "public_network", use_dhcp_assigned_default_route: true
+      #machineh.vm.network "public_network", use_dhcp_assigned_default_route: true
 
       # Un repertoire partag� est un plus mais demande beaucoup plus
       # de travail - a voir � la fin
@@ -84,6 +87,8 @@ Vagrant.configure("2") do |config|
       machineh.vm.provision "shell", path: "scripts/install_web.sh"
       #
       machineh.vm.provision "shell", path: "scripts/configuration_proxy.sh"
+      #
+      machineh.vm.provision "shell", path: "scripts/distributioncle.sh"
   end
 
 
@@ -125,6 +130,9 @@ Vagrant.configure("2") do |config|
       #
       machine.vm.provision "shell", path: "scripts/install_web.sh"
       #
+      #machine.vm.provision "shell", path: "scripts/recup_sql.sh"
+      #
+      machine.vm.provision "shell", path: "scripts/utilisateur.sh"
       #machine.vm.provision "shell", path: "scripts/provision.sh"
 
 

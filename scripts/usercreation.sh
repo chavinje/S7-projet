@@ -5,7 +5,7 @@ USERNAME="dev"
 PASSWORD="dev"  # Remplacez 'dev' par le mot de passe souhaité
 
 # Adresse IP ou nom d'hôte de la VM source
-VM_SOURCE="192.168.56.80"
+VM_SOURCE="192.168.56.82"
 
 # Création de l'utilisateur avec des privilèges sudo
 sudo adduser --disabled-password --gecos "" $USERNAME
