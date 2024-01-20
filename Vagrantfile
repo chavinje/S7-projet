@@ -47,7 +47,7 @@ Vagrant.configure("2") do |config|
     #
     machine.vm.provision "shell", path: "scripts/SITEWEB/Configconf.sh"
     #
-    machine.vm.provision "shell", path: "scripts/utilisateur.sh"
+    #machine.vm.provision "shell", path: "scripts/utilisateur.sh"
     #machine.vm.provision "shell", path: "scripts/provision.sh"
 
 
@@ -96,7 +96,7 @@ Vagrant.configure("2") do |config|
     #
     machinebdd.vm.provision "shell", path: "scripts/TablesCreation.sh"
     #
-    machinebdd.vm.provision "shell", path: "scripts/utilisateur.sh"
+    #machinebdd.vm.provision "shell", path: "scripts/utilisateur.sh"
 
 
 
@@ -108,7 +108,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "srv-proxyhttps" do |machineh|
       machineh.vm.hostname = "srv-proxyhttps"
       machineh.vm.box = "chavinje/fr-bull-64"
-      #machineh.vm.network :private_network, ip: "192.168.56.82"
+      machineh.vm.network :private_network, ip: "192.168.56.82"
 
       #Acces � la VM Web � distance
       #machineh.vm.network "public_network", use_dhcp_assigned_default_route: true
@@ -143,7 +143,7 @@ Vagrant.configure("2") do |config|
       #
       machineh.vm.provision "shell", path: "scripts/configuration_proxy.sh"
       #
-      machineh.vm.provision "shell", path: "scripts/distributioncle.sh"
+      #machineh.vm.provision "shell", path: "scripts/distributioncle.sh"
   end
 
 
