@@ -17,20 +17,21 @@ echo "START Premiere Etape Creation Database..."
 
 mysql -e "CREATE DATABASE Basket" 
 
-echo "START - Table Equipe"
-#mysql Basket < /var/www/html/projetinfralog-site-master/.sql
+
+echo "START - Table equipes"
+mysql Basket < /vagrant/scripts/equipes.sql
 echo "END - Table "
 
-echo "START - Table "
-#mysql Basket < /var/www/html/projetinfralog-site-master/.sql
+echo "START - Table joueurs"
+mysql Basket < /vagrant/scripts/joueurs.sql
 echo "END - Table "
 
-echo "START - Table "
-#mysql Basket < /var/www/html/projetinfralog-site-master/.sql
+echo "START - Table matchs"
+mysql Basket < /vagrant/scripts/matchs.sql
 echo "END - Table "
 
-echo "START - Table "
-#mysql Basket < /var/www/html/projetinfralog-site-master/.sql
+echo "START - Table statistiques "
+mysql Basket < /vagrant/scripts/statistiques.sql
 echo "END - Table "
 
 
