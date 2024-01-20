@@ -15,7 +15,7 @@ echo "START - Installation des Tables de la BDD - "$IP
 
 echo "START Premiere Etape Creation Database..."
 
-mysql -e "CREATE DATABASE Basket" 
+mysql -e "CREATE DATABASE moodle" 
 
 
 echo "START - Table equipes"
