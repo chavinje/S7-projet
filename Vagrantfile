@@ -5,6 +5,54 @@ RAM = 1024
 Vagrant.configure("2") do |config|
   # Serveur virtuel de d�monstration
 
+  config.vm.define "srv-web", primary: true do |machine|
+    machine.vm.hostname = "srv-web"
+    machine.vm.box = "chavinje/fr-bull-64"
+    machine.vm.network :private_network, ip: "192.168.56.80"
+
+    #Acces � la VM Web � distance
+    #machine.vm.network "public_network", use_dhcp_assigned_default_route: true
+
+    #peut creer un conflit si cette adresse ip est déjà assigné à une personne
+    #machine.vm.network "public_network", ip: "*.*.*.*"
+
+
+    # Un repertoire partag� est un plus mais demande beaucoup plus
+    # de travail - a voir � la fin
+    machine.vm.synced_folder "./data", "/vagrant_data", SharedFoldersEnableSymlinksCreate: false
+
+    machine.vm.provider :virtualbox do |v2|
+      v2.customize ["modifyvm", :id, "--name", "srv-web"]
+      v2.customize ["modifyvm", :id, "--groups", "/S7-projet"]
+      v2.customize ["modifyvm", :id, "--cpus", "1"]
+      v2.customize ["modifyvm", :id, "--memory", 2*RAM]
+      v2.customize ["modifyvm", :id, "--natdnshostresolver1", "off"]
+      v2.customize ["modifyvm", :id, "--natdnsproxy1", "off"]
+    end
+
+    machine.vm.provision "shell", inline: <<-SHELL
+      sed -i 's/ChallengeResponseAuthentication no/ChallengeResponseAuthentication yes/g' /etc/ssh/sshd_config
+      sleep 3
+      service ssh restart
+    SHELL
+
+    #
+    machine.vm.provision "shell", path: "scripts/install_sys.sh"
+    #
+    machine.vm.provision "shell", path: "scripts/install_web.sh"
+    #
+    machine.vm.provision "shell", path: "scripts/install_myadmin.sh"
+    #
+    machine.vm.provision "shell", path: "scripts/SITEWEB/GitClone.sh"
+    #
+    machine.vm.provision "shell", path: "scripts/SITEWEB/Configconf.sh"
+    #
+    #machine.vm.provision "shell", path: "scripts/utilisateur.sh"
+    #machine.vm.provision "shell", path: "scripts/provision.sh"
+
+
+
+  end
 
 
   config.vm.define "srv-database" do |machinebdd|
@@ -38,20 +86,25 @@ Vagrant.configure("2") do |config|
     #
     machinebdd.vm.provision "shell", path: "scripts/install_sys.sh"
     #
+    machinebdd.vm.provision "shell", path: "scripts/install_web.sh"
+    #
     machinebdd.vm.provision "shell", path: "scripts/install_bdd.sh"
     #
     machinebdd.vm.provision "shell", path: "scripts/install_myadmin.sh"
     #
-    machinebdd.vm.provision "shell", path: "scripts/install_web.sh"
+    machinebdd.vm.provision "shell", path: "scripts/recup_sql.sh"
     #
-    machinebdd.vm.provision "shell", path: "scripts/utilisateur.sh"
+    machinebdd.vm.provision "shell", path: "scripts/TablesCreation.sh"
+    #
+    #machinebdd.vm.provision "shell", path: "scripts/utilisateur.sh"
 
 
 
 
   end
 
-
+  #N'oublie de pas de decommenter la ligne pour que le dhcp attribue une adresse publique à ma VM
+  #Adresse privée commentée
   config.vm.define "srv-proxyhttps" do |machineh|
       machineh.vm.hostname = "srv-proxyhttps"
       machineh.vm.box = "chavinje/fr-bull-64"
@@ -82,62 +135,18 @@ Vagrant.configure("2") do |config|
       #
       machineh.vm.provision "shell", path: "scripts/install_sys.sh"
       #
-      machineh.vm.provision "shell", path: "scripts/install_myadmin.sh"
-      #
       machineh.vm.provision "shell", path: "scripts/install_web.sh"
+      #
+
+      #
+      machineh.vm.provision "shell", path: "scripts/install_myadmin.sh"
       #
       machineh.vm.provision "shell", path: "scripts/configuration_proxy.sh"
       #
-      machineh.vm.provision "shell", path: "scripts/distributioncle.sh"
+      #machineh.vm.provision "shell", path: "scripts/distributioncle.sh"
   end
 
 
-  config.vm.define "srv-web" do |machine|
-      machine.vm.hostname = "srv-web"
-      machine.vm.box = "chavinje/fr-bull-64"
-      machine.vm.network :private_network, ip: "192.168.56.80"
-
-      #Acces � la VM Web � distance
-      #machine.vm.network "public_network", use_dhcp_assigned_default_route: true
-
-      #peut creer un conflit si cette adresse ip est déjà assigné à une personne
-      #machine.vm.network "public_network", ip: "*.*.*.*"
-
-
-      # Un repertoire partag� est un plus mais demande beaucoup plus
-      # de travail - a voir � la fin
-      machine.vm.synced_folder "./data", "/vagrant_data", SharedFoldersEnableSymlinksCreate: false
-
-      machine.vm.provider :virtualbox do |v2|
-        v2.customize ["modifyvm", :id, "--name", "srv-web"]
-        v2.customize ["modifyvm", :id, "--groups", "/S7-projet"]
-        v2.customize ["modifyvm", :id, "--cpus", "1"]
-        v2.customize ["modifyvm", :id, "--memory", 2*RAM]
-        v2.customize ["modifyvm", :id, "--natdnshostresolver1", "off"]
-        v2.customize ["modifyvm", :id, "--natdnsproxy1", "off"]
-      end
-
-      machine.vm.provision "shell", inline: <<-SHELL
-        sed -i 's/ChallengeResponseAuthentication no/ChallengeResponseAuthentication yes/g' /etc/ssh/sshd_config
-        sleep 3
-        service ssh restart
-      SHELL
-
-      #
-      machine.vm.provision "shell", path: "scripts/install_sys.sh"
-      #
-      machine.vm.provision "shell", path: "scripts/install_myadmin.sh"
-      #
-      machine.vm.provision "shell", path: "scripts/install_web.sh"
-      #
-      #machine.vm.provision "shell", path: "scripts/recup_sql.sh"
-      #
-      machine.vm.provision "shell", path: "scripts/utilisateur.sh"
-      #machine.vm.provision "shell", path: "scripts/provision.sh"
-
-
-
-  end
 
 
 

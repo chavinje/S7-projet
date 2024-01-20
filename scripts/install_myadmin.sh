@@ -22,13 +22,22 @@ apt-get install $APT_OPT \
   php-pear \
   php-gettext \
   php-cgi \
-  phpmyadmin \
-  >> $LOG_FILE 2>&1
+>> $LOG_FILE 2>&1
+#
+#sudo apt-get install debconf-utils -y
 
+#echo 'phpmyadmin phpmyadmin/reconfigure-webserver multiselect apache2' | sudo debconf-set-selections
+#echo 'phpmyadmin phpmyadmin/dbconfig-install boolean true' | sudo debconf-set-selections
+#echo 'phpmyadmin phpmyadmin/mysql/admin-pass password network' | sudo debconf-set-selections
+#echo 'phpmyadmin phpmyadmin/mysql/app-pass password network' | sudo debconf-set-selections
+#echo 'phpmyadmin phpmyadmin/app-password-confirm password network' | sudo debconf-set-selections
+
+#sudo apt-get install phpmyadmin -y
+#
 echo "=> [2]: Download files"
 wget -q -O /tmp/myadmin.zip \
-https://files.phpmyadmin.net/phpMyAdmin/${MYADMIN_VERSION}/phpMyAdmin-${MYADMIN_VERSION}-all-languages.zip \
->> $LOG_FILE 2>&1
+  https://files.phpmyadmin.net/phpMyAdmin/${MYADMIN_VERSION}/phpMyAdmin-${MYADMIN_VERSION}-all-languages.zip \
+  >> $LOG_FILE 2>&1
 
 unzip /tmp/myadmin.zip -d ${WWW_REP} \
 >> $LOG_FILE 2>&1

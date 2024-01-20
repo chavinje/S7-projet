@@ -6,8 +6,8 @@ IP=$(hostname -I | awk '{print $2}')
 #Utilisateur a créer (si vide pas de création)
 #NOM="dev"
 #MDP="dev"
-NOM="dev"
-MDP="dev"
+NOM=""
+MDP=""
 HDIR=""
 
 APT_OPT="-o Dpkg::Progress-Fancy="0" -q -y"

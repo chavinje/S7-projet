@@ -10,20 +10,14 @@ DEBIAN_FRONTEND="noninteractive"
 
 echo "START - Deplacement des fichiers - "$IP
 
-cd /var/www/html/site
-mkdir git
-cd git
-git clone https://github.com/
+cd /var/www/html/
+
+
+git clone https://gitlab.com/MateoESEO/projetinfralog-site.git | sudo /var/www/html/site
 
 mkdir /var/www/html/site/
 
-rm -r /var/www/html/git/Projet-InfraLogiciel/.vscode
-rm -r /var/www/html/git/Projet-InfraLogiciel/livrables
-rm -r /var/www/html/git/Projet-InfraLogiciel/timefusion-dekstop
-rm -r /var/www/html/git/Projet-InfraLogiciel/timefusion-web
-rm -r /var/www/html/git/Projet-InfraLogiciel/VM
-rm /var/www/html/git/Projet-InfraLogiciel/Configurations.txt
-rm /var/www/html/git/Projet-InfraLogiciel/ProjetInfraLog.drawio
-rm /var/www/html/git/Projet-InfraLogiciel/README.md
+rm -r /var/www/html/site/
+
 
 echo "END - Deplacement des fichiers"
