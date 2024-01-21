@@ -62,6 +62,6 @@ password: network
 
 EOF
 
-cp -r /var/www/html/myadmin /var/www/html/frontend/
+#cp -r /var/www/html/myadmin /var/www/html/frontend/
 
 echo "END - Configuration phpMyAdmin"
