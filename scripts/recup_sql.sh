@@ -11,13 +11,14 @@ DEBIAN_FRONTEND="noninteractive"
 echo "START - Deplacement des fichiers - "$IP
 
 cd /var/www/html/
+#touch /var/www/html
 
+#mkdir /var/www/html/site/
 
-git clone https://gitlab.com/MateoESEO/projetinfralog-site.git | sudo /var/www/html/site
+git clone -b master https://gitlab.com/MateoESEO/projetinfralog-site.git   /var/www/html/site
+#mkdir /var/www/html/site/
 
-mkdir /var/www/html/site/
-
-rm -r /var/www/html/site/
+#rm -r /var/www/html/site/
 
 
 echo "END - Deplacement des fichiers"

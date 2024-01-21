@@ -8,11 +8,11 @@ LOG_FILE="/vagrant/logs/install_bdd.log"
 DEBIAN_FRONTEND="noninteractive" 
 
 #Utilisateur a créer (si un vide alors pas de création)
-DBNAME="moodle"
+DBNAME="Basket"
 DBUSER="moodle_user"
 DBPASSWD="network"
 #Fichier sql à injecter (présent dans un sous répertoire)
-DBFILE="files/creation_bdd.sql"
+DBFILE="files/infralogiciel.sql"
 
 echo "START - install MariaDB - "$IP
 

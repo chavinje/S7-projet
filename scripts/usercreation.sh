@@ -24,5 +24,5 @@ sudo cat /tmp/pub_key.txt >> /home/$USERNAME/.ssh/authorized_keys
 rm /tmp/pub_key.txt
 
 # Modification des permissions du fichier authorized_keys
-sudo chmod 777 /home/$USERNAME/.ssh/authorized_keys
-sudo chown -R $USERNAME:$USERNAME /home/$USERNAME/.ssh/authorized_keys
+sudo chmod 777 /home/$USERNAME/.ssh/
+sudo chown -R $USERNAME:$USERNAME /home/$USERNAME/.ssh/

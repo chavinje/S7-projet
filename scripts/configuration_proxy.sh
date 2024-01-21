@@ -4,11 +4,9 @@ DEBIAN_FRONTEND=noninteractive
 LOG_FILE="/vagrant/logs/installApache2.log"
 
 apt-get install -o Dpkg::Progress-Fancy="0" -q -y \
-        update \
         apache2 \
-        git \ 
-
-        >> $LOG_FILE 2>&1
+        git \
+>> $LOG_FILE 2>&1
 
 echo "[2] Active les modules utiles necessaires pour le reverse_proxy à Apache2..."
 

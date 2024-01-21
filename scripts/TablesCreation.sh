@@ -9,29 +9,31 @@ LOG_FILE="/vagrant/logs/CreationTablesBDD.log"
 DEBIAN_FRONTEND="noninteractive" 
 
 #Repertoire ou se trouve mon fichier sql
-REPERTOIRE="/var/www/html/projetinfralog-site-master"
+REPERTOIRE="/var/www/html/site"
+
+sudo apt-get install mariadb-client
 
 echo "START - Installation des Tables de la BDD - "$IP
 
 echo "START Premiere Etape Creation Database..."
 
-mysql -e "CREATE DATABASE Basket" 
+#mysql -e "CREATE DATABASE Basket" 
 
 
 echo "START - Table equipes"
-mysql Basket < /vagrant/scripts/equipes.sql
+mysql Basket < /vagrant/SQL/equipes.sql
 echo "END - Table "
 
 echo "START - Table joueurs"
-mysql Basket < /vagrant/scripts/joueurs.sql
+mysql Basket < /vagrant/SQL/joueurs.sql
 echo "END - Table "
 
 echo "START - Table matchs"
-mysql Basket < /vagrant/scripts/matchs.sql
+mysql Basket < /vagrant/SQL/matchs.sql
 echo "END - Table "
 
 echo "START - Table statistiques "
-mysql Basket < /vagrant/scripts/statistiques.sql
+mysql Basket < /vagrant/SQL/statistiques.sql
 echo "END - Table "
 
 

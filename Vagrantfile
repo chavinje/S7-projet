@@ -25,7 +25,7 @@ Vagrant.configure("2") do |config|
       v2.customize ["modifyvm", :id, "--name", "srv-web"]
       v2.customize ["modifyvm", :id, "--groups", "/S7-projet"]
       v2.customize ["modifyvm", :id, "--cpus", "1"]
-      v2.customize ["modifyvm", :id, "--memory", 2*RAM]
+      v2.customize ["modifyvm", :id, "--memory", 3*RAM]
       v2.customize ["modifyvm", :id, "--natdnshostresolver1", "off"]
       v2.customize ["modifyvm", :id, "--natdnsproxy1", "off"]
     end
@@ -47,8 +47,8 @@ Vagrant.configure("2") do |config|
     #
     machine.vm.provision "shell", path: "scripts/SITEWEB/Configconf.sh"
     #
-    #machine.vm.provision "shell", path: "scripts/utilisateur.sh"
-    #machine.vm.provision "shell", path: "scripts/provision.sh"
+    machine.vm.provision "shell", path: "scripts/utilisateur.sh"
+
 
 
 
@@ -96,7 +96,7 @@ Vagrant.configure("2") do |config|
     #
     machinebdd.vm.provision "shell", path: "scripts/TablesCreation.sh"
     #
-    #machinebdd.vm.provision "shell", path: "scripts/utilisateur.sh"
+    machinebdd.vm.provision "shell", path: "scripts/utilisateur.sh"
 
 
 
@@ -137,13 +137,13 @@ Vagrant.configure("2") do |config|
       #
       machineh.vm.provision "shell", path: "scripts/install_web.sh"
       #
-
-      #
       machineh.vm.provision "shell", path: "scripts/install_myadmin.sh"
       #
       machineh.vm.provision "shell", path: "scripts/configuration_proxy.sh"
       #
-      #machineh.vm.provision "shell", path: "scripts/distributioncle.sh"
+      machineh.vm.provision "shell", path: "scripts/distributioncle1.sh"
+      #
+      machineh.vm.provision "shell", path: "scripts/certificat.sh"
   end
 
 
