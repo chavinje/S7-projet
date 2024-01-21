@@ -3,30 +3,6 @@
 
 Vagrant.configure("2") do |config|
 
-  # Configuration de la VM avec SSH distant et https
-  config.vm.define "ssh-https" do |ssh|
-    ssh.vm.hostname = "ssh-https"
-    ssh.vm.box = "chavinje/fr-bull-64"
-    ssh.vm.network :private_network, ip: "192.168.56.14"
-    #ssh.vm.network "public_network", use_dhcp_assigned_default_route: true
-
-    ssh.vm.provider :virtualbox do |v|
-      v.customize ["modifyvm", :id, "--name", "ssh-https"]
-      v.customize ["modifyvm", :id, "--groups", "/S7-projet"]
-      v.customize ["modifyvm", :id, "--cpus", "2"]
-      v.customize ["modifyvm", :id, "--memory", 1024]
-      v.customize ["modifyvm", :id, "--natdnshostresolver1", "off"]
-      v.customize ["modifyvm", :id, "--natdnsproxy1", "off"]
-    end
-
-    config.vm.provision "shell", inline: <<-SHELL
-      sed -i 's/ChallengeResponseAuthentication no/ChallengeResponseAuthentication yes/g' /etc/ssh/sshd_config
-      sleep 3
-      service ssh restart
-    SHELL
-    ssh.vm.provision "shell", path: "scripts/reverse_proxy.sh"
-    #ssh.vm.provision "shell", path: "scripts/proxy.sh"
-  end
 
   # Configuration du serveur pour les base de donnée
   config.vm.define "database-server" do |database|
@@ -84,6 +60,31 @@ Vagrant.configure("2") do |config|
     web.vm.provision "shell", path: "scripts/lagence.sh"
     web.vm.provision "shell", path: "scripts/install_myadmin.sh"
     #web.vm.provision "shell", path: "scripts/install_moodle.sh"
+  end
+
+  # Configuration de la VM avec SSH distant et https
+  config.vm.define "ssh-https" do |ssh|
+    ssh.vm.hostname = "ssh-https"
+    ssh.vm.box = "chavinje/fr-bull-64"
+    ssh.vm.network :private_network, ip: "192.168.56.14"
+    #ssh.vm.network "public_network", use_dhcp_assigned_default_route: true
+
+    ssh.vm.provider :virtualbox do |v|
+      v.customize ["modifyvm", :id, "--name", "ssh-https"]
+      v.customize ["modifyvm", :id, "--groups", "/S7-projet"]
+      v.customize ["modifyvm", :id, "--cpus", "2"]
+      v.customize ["modifyvm", :id, "--memory", 1024]
+      v.customize ["modifyvm", :id, "--natdnshostresolver1", "off"]
+      v.customize ["modifyvm", :id, "--natdnsproxy1", "off"]
+    end
+
+    config.vm.provision "shell", inline: <<-SHELL
+      sed -i 's/ChallengeResponseAuthentication no/ChallengeResponseAuthentication yes/g' /etc/ssh/sshd_config
+      sleep 3
+      service ssh restart
+    SHELL
+    ssh.vm.provision "shell", path: "scripts/reverse_proxy.sh"
+    #ssh.vm.provision "shell", path: "scripts/proxy.sh"
   end
 
 end
