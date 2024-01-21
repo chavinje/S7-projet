@@ -105,6 +105,7 @@ printf '\tErrorLog ${APACHE_LOG_DIR}/error.log\n' >> /etc/apache2/sites-availabl
 printf '\tCustomLog ${APACHE_LOG_DIR}/access.log combined\n' >> /etc/apache2/sites-available/myadmin.conf
 printf '</VirtualHost>\n' >> /etc/apache2/sites-available/myadmin.conf
 
+
 touch /etc/apache2/sites-available/ssl.conf
 printf '<IfModule mod_ssl.c>\n' > /etc/apache2/sites-available/ssl.conf
 printf '\t<VirtualHost _default_:443>\n ' >> /etc/apache2/sites-available/ssl.conf
@@ -129,8 +130,8 @@ printf '</IfModule>\n' >> /etc/apache2/sites-available/ssl.conf
 
 
 
-a2ensite backend.conf frontend.conf myadmin.conf ssl.conf
-a2dissite  000-default.conf
+a2ensite backend.conf frontend.conf myadmin.conf ssl.conf >> $LOG_FILE 2>&1
+a2dissite  000-default.conf >> $LOG_FILE 2>&1
 
 sed -i 's/Listen 80/Listen 80\
 Listen 3000\
@@ -141,9 +142,10 @@ Listen 228/g' /etc/apache2/ports.conf
 
 systemctl restart apache2
 
-ssh-keygen -t rsa -b 2048 -f ~/.ssh/id_rsa -q -N "" -y
+mkdir ~/.ssh
+ssh-keygen -t rsa -b 2048 -f ~/.ssh/id_rsa -q -N "" >> $LOG_FILE 2>&1
 
-sshpass -p "vagrant" ssh-copy-id -i ~/.ssh/id_rsa.pub vagrant@192.168.56.10
-sshpass -p "vagrant" ssh-copy-id -i ~/.ssh/id_rsa.pub vagrant@192.168.56.12
+sshpass -p "vagrant" ssh-copy-id -i /root/.ssh/id_rsa.pub vagrant@192.168.56.10  >> $LOG_FILE 2>&1
+sshpass -p "vagrant" ssh-copy-id -i /root/.ssh/id_rsa.pub vagrant@192.168.56.12  >> $LOG_FILE 2>&1
 
 #cp /home/vagrant/.ssh/id_rsa.pub /vagrant/authorized_keys
