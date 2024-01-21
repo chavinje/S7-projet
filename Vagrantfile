@@ -81,6 +81,7 @@ Vagrant.configure("2") do |config|
     #web.vm.provision "file", source: "C:/Users/aguib/App.js", destination: "/tmp/web/App.js"
     web.vm.provision "shell", path: "scripts/installation_Systeme_web.sh"
     web.vm.provision "shell", path: "scripts/install_web.sh"
+    web.vm.provision "shell", path: "scripts/lagence.sh"
     web.vm.provision "shell", path: "scripts/install_myadmin.sh"
     #web.vm.provision "shell", path: "scripts/install_moodle.sh"
   end

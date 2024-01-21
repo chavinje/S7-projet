@@ -83,5 +83,6 @@ a2enmod rewrite
 
 echo "Frontend prêt et accessible sur l'ip publique et le port 80"
 echo "Phpmyadmin prêt et accessible sur l'ip publique et le port 228"
+echo "Attendre la mise en place du site"
 
 echo "END - install web Server"
