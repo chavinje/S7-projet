@@ -47,36 +47,45 @@ Listen 228/g' /etc/apache2/ports.conf
 
 # File creation frontend.conf
 touch /etc/apache2/sites-available/frontend.conf
-printf '<VirtualHost *:223>\n' > /etc/apache2/sites-available/frontend.conf
-printf '\tDocumentRoot /var/www/html/frontend\n' >> /etc/apache2/sites-available/frontend.conf
-printf '\tServerName frontend.local\n' >> /etc/apache2/sites-available/frontend.conf
-printf '\tErrorLog ${APACHE_LOG_DIR}/frontend_error.log\n' >> /etc/apache2/sites-available/frontend.conf
-printf '\tCustomLog ${APACHE_LOG_DIR}/frontend_access.log combined\n\n' >> /etc/apache2/sites-available/frontend.conf
-printf '\t<Directory /var/www/html/frontend>\n' >> /etc/apache2/sites-available/frontend.conf
-printf '\t\tOptions Indexes FollowSymLinks MultiViews\n' >> /etc/apache2/sites-available/frontend.conf
-printf '\t\tAllowOverride All\n' >> /etc/apache2/sites-available/frontend.conf
-printf '\t\tOrder allow,deny\n' >> /etc/apache2/sites-available/frontend.conf
-printf '\t\tallow from all\n\n' >> /etc/apache2/sites-available/frontend.confprintf '<Directory /var/www/html/frontend>\n' >> /etc/apache2/sites-available/frontend.conf
-printf '\t\tOptions Indexes FollowSymLinks MultiViews\n' >> /etc/apache2/sites-available/frontend.conf
-printf '\t\tRequire all granted\n' >> /etc/apache2/sites-available/frontend.conf
-printf '\t\tRewriteEngine on\n' >> /etc/apache2/sites-available/frontend.confprintf '<Directory /var/www/html/frontend>\n' >> /etc/apache2/sites-available/frontend.conf
-printf '\t\tRewriteBase /\n' >> /etc/apache2/sites-available/frontend.conf
-printf '\t\tRewriteRule ^index\.html$ - [L]\n' >> /etc/apache2/sites-available/frontend.conf
-printf '\t\tRewriteCond %%{REQUEST_FILENAME} !-f\n' >> /etc/apache2/sites-available/frontend.conf
-printf '\t\tRewriteCond %%{REQUEST_FILENAME} !-d\n' >> /etc/apache2/sites-available/frontend.conf
-printf '\t\tRewriteRule . /index.html [L]\n' >> /etc/apache2/sites-available/frontend.conf
-printf '\t</Directory>\n' >> /etc/apache2/sites-available/frontend.conf
-printf '</VirtualHost>\n' >> /etc/apache2/sites-available/frontend.conf
+cat <<EOF > /etc/apache2/sites-available/frontend.conf
+<VirtualHost *:223>
+    DocumentRoot /var/www/html/frontend
+    ServerName frontend.local
+    
+    ErrorLog ${APACHE_LOG_DIR}/frontend_error.log
+    CustomLog ${APACHE_LOG_DIR}/frontend_access.log combined
+
+    <Directory /var/www/html/frontend>
+        Options Indexes FollowSymLinks MultiViews
+        AllowOverride All
+        Order allow,deny
+        allow from all
+
+        Options Indexes FollowSymLinks MultiViews
+        Require all granted
+        RewriteEngine on
+        RewriteBase /
+        RewriteRule ^index\.html$ - [L]
+        RewriteCond %%{REQUEST_FILENAME} !-f
+        RewriteCond %%{REQUEST_FILENAME} !-d
+        RewriteRule . /index.html [L]
+    </Directory>
+</VirtualHost>
+EOF
+
 
 
 # File creation myadmin.conf
 touch /etc/apache2/sites-available/myadmin.conf
-printf '<VirtualHost *:228>\n' > /etc/apache2/sites-available/myadmin.conf
-printf 'DocumentRoot /var/www/html/myadmin\n' >> /etc/apache2/sites-available/myadmin.conf
-printf 'ServerName myadmin.local\n\n' >> /etc/apache2/sites-available/myadmin.conf
-printf 'ErrorLog ${APACHE_LOG_DIR}/myadmin.log\n' >> /etc/apache2/sites-available/myadmin.conf
-printf 'CustomLog ${APACHE_LOG_DIR}/myadmin_access.log combined\n' >> /etc/apache2/sites-available/myadmin.conf
-printf '</VirtualHost>\n' >> /etc/apache2/sites-available/myadmin.conf
+cat <<EOF > /etc/apache2/sites-available/myadmin.conf
+<VirtualHost *:228>
+    DocumentRoot /var/www/html/myadmin
+    ServerName myadmin.local
+
+    ErrorLog ${APACHE_LOG_DIR}/myadmin.log
+    CustomLog ${APACHE_LOG_DIR}/myadmin_access.log combined
+</VirtualHost> 
+EOF
 
 a2ensite frontend.conf myadmin.conf
 a2enmod rewrite

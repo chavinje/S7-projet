@@ -29,22 +29,25 @@ cd /projet/L-agence/packages/frontend
 npm install >> $LOG_FILE 2>&1 
 npm run build >> $LOG_FILE 2>&1 
 cd
-
 cp -r /projet/L-agence/packages/frontend/dist /var/www/html/frontend
-
 systemctl restart apache2
+
 
 # Configuration du fichier pour l'accès à la base de donné
 touch /projet/L-agence/packages/backend/.env
-printf '# Database\n' > /projet/L-agence/packages/backend/.env
-printf 'DB_HOST=192.168.56.12\n' >> /projet/L-agence/packages/backend/.env
-printf 'DB_PORT=3306\n' >> /projet/L-agence/packages/backend/.env
-printf 'DB_USERNAME=admin\n' >> /projet/L-agence/packages/backend/.env
-printf 'DB_PASSWORD=network\n' >> /projet/L-agence/packages/backend/.env
-printf 'DB_DATABASE=lagence\n\n' >> /projet/L-agence/packages/backend/.env
-printf 'MAILER_EMAIL=eseolagence@gmail.com\n' >> /projet/L-agence/packages/backend/.env
-printf 'MAILER_PASSWORD="idkl nueb jgrt gpaq "\n' >> /projet/L-agence/packages/backend/.env
-printf 'FRONTEND_URL=http://192.168.56.10:223\n' >> /projet/L-agence/packages/backend/.env
+cat <<EOF /projet/L-agence/packages/backend/.env
+# Database
+DB_HOST=192.168.56.12
+DB_PORT=3306
+DB_USERNAME=admin
+DB_PASSWORD=network
+DB_DATABASE=lagence
+
+MAILER_EMAIL=eseolagence@gmail.com
+MAILER_PASSWORD="idkl nueb jgrt gpaq "
+FRONTEND_URL=http://192.168.56.10:223
+EOF
+
 
 # Compiler le backend contruit après la compilation et le faire apparaître sur la fenêtre node_session
 cd /projet/L-agence/packages/backend
