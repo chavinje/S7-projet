@@ -44,6 +44,7 @@ printf 'DB_PASSWORD=network\n' >> /projet/L-agence/packages/backend/.env
 printf 'DB_DATABASE=lagence\n\n' >> /projet/L-agence/packages/backend/.env
 printf 'MAILER_EMAIL=eseolagence@gmail.com\n' >> /projet/L-agence/packages/backend/.env
 printf 'MAILER_PASSWORD="idkl nueb jgrt gpaq "\n' >> /projet/L-agence/packages/backend/.env
+printf 'FRONTEND_URL=http://192.168.56.10:223\n' >> /projet/L-agence/packages/backend/.env
 
 # Compiler le backend contruit après la compilation et le faire apparaître sur la fenêtre node_session
 cd /projet/L-agence/packages/backend
