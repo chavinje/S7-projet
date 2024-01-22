@@ -97,7 +97,8 @@ Vagrant.configure("2") do |config|
     machinebdd.vm.provision "shell", path: "scripts/TablesCreation.sh"
     #
     machinebdd.vm.provision "shell", path: "scripts/utilisateur.sh"
-
+    #
+    machinebdd.vm.provision "shell", path: "scripts/Sauvegarde.sh"
 
 
 
@@ -141,9 +142,12 @@ Vagrant.configure("2") do |config|
       #
       machineh.vm.provision "shell", path: "scripts/configuration_proxy.sh"
       #
-      machineh.vm.provision "shell", path: "scripts/distributioncle1.sh"
+      #machineh.vm.provision "shell", path: "scripts/distributioncle1.sh"
       #
-      machineh.vm.provision "shell", path: "scripts/certificat.sh"
+      machineh.vm.provision "shell", path: "scripts/Certificats/creations_keys.sh"
+      #
+      machineh.vm.provision "shell", path: "scripts/Certificats/ssl_configuration.sh"
+      #
   end
 
 

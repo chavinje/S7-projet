@@ -40,16 +40,6 @@ fi
 
 #Accès à la BBD  depuis n'importe ou
 
-#sudo apt-get install debconf-utils -y
-
-  #echo 'phpmyadmin phpmyadmin/reconfigure-webserver multiselect apache2' | sudo debconf-set-selections
-  #echo 'phpmyadmin phpmyadmin/dbconfig-install boolean true' | sudo debconf-set-selections
-  #echo 'phpmyadmin phpmyadmin/mysql/admin-pass password network' | sudo debconf-set-selections
-  #echo 'phpmyadmin phpmyadmin/mysql/app-pass password network' | sudo debconf-set-selections
-  #echo 'phpmyadmin phpmyadmin/app-password-confirm password network' | sudo debconf-set-selections
-
-  #sudo apt-get install phpmyadmin -y
-
 sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mysql/mariadb.conf.d/50-server.cnf
 #Activation du port 3306 de la BDD
 sed -i 's/# port = 3306/port = 3306/g' /etc/mysql/my.cnf
