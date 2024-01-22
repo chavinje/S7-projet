@@ -17,6 +17,7 @@ echo "START - Installation des Tables de la BDD - "$IP
 
 echo "START Premiere Etape Creation Database..."
 
+
 #mysql -e "CREATE DATABASE Basket" 
 
 #1er moyen de configurer la BDD par la creation de tables à partir de scripts sql
