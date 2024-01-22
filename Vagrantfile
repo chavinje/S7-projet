@@ -81,6 +81,10 @@ Vagrant.configure("2") do |config|
       sleep 3
       service ssh restart
 
+      echo "====> SCRIPT Table CRON"
+      sudo bash /vagrant/scripts/Sauvegarde.sh
+
+
 
     SHELL
     #
@@ -98,7 +102,7 @@ Vagrant.configure("2") do |config|
     #
     machinebdd.vm.provision "shell", path: "scripts/utilisateur.sh"
     #
-    machinebdd.vm.provision "shell", path: "scripts/Sauvegarde.sh"
+    #machinebdd.vm.provision "shell", path: "scripts/Sauvegarde.sh"
 
 
 
@@ -142,11 +146,11 @@ Vagrant.configure("2") do |config|
       #
       machineh.vm.provision "shell", path: "scripts/configuration_proxy.sh"
       #
-      #machineh.vm.provision "shell", path: "scripts/distributioncle1.sh"
+      machineh.vm.provision "shell", path: "scripts/distributioncle.sh"
       #
-      machineh.vm.provision "shell", path: "scripts/Certificats/creations_keys.sh"
+      achineh.vm.provision "shell", path: "scripts/certificats/creations_keys.sh"
       #
-      machineh.vm.provision "shell", path: "scripts/Certificats/ssl_configuration.sh"
+      machineh.vm.provision "shell", path: "scripts/certificats/ssl_configuration.sh"
       #
   end
 

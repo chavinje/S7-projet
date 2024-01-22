@@ -32,11 +32,11 @@ if [ -n "$DBNAME" ] && [ -n "$DBUSER" ] && [ -n "$DBPASSWD" ] ;then
   >> $LOG_FILE 2>&1
 fi
 
-echo "=> [3]: Configuration de BDD"
-if [ -f "$DBFILE" ] ;then
-  mysql < /vagrant/$DBFILE \
-  >> $LOG_FILE 2>&1
-fi
+#echo "=> [3]: Configuration de BDD"
+#if [ -f "$DBFILE" ] ;then
+ # mysql < /vagrant/$DBFILE \
+ # >> $LOG_FILE 2>&1
+#fi
 
 #Accès à la BBD  depuis n'importe ou
 

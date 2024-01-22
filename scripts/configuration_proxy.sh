@@ -40,8 +40,6 @@ sudo sh -c 'echo "
         </VirtualHost>
                 " > /etc/apache2/sites-available/reverseproxy.conf'
 	
-
-
 sudo sh -c 'echo "
         # If you just change the port or add more ports here, you will likely also
         # have to change the VirtualHost statement in

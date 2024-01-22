@@ -12,9 +12,9 @@ key_name="basketsite11.com.key"
 cert_sign_request="basketsite11.com.csr"
 certificate_name="basketsite11.crt"
 
-echo "Configuration openSSL"
-
+echo "DEBUT CONFIGURATION OpenSSL"
 echo "=> [1]: Installing required packages ..."
+
 apt-get install $APT_OPT \
     apache2 \
     git \
@@ -25,10 +25,10 @@ echo "=> [2]: Enabling packages"
 sudo a2enmod proxy proxy_http
 sudo a2dissite 000-default.conf
 
-sudo systemctl restart apache2
+sudo systemctl reload apache2
 
 #Creer un nouveau fichier de configuration pour le ssl
-sudo touch /etc/apache2/sites-available/ssl.conf
+sudo touch /etc/apache2/sites-available/ssl_config.conf
 
 sudo  sh -c 'echo "
 
@@ -41,8 +41,8 @@ ServerName basketsite11.com
         ProxyRequests Off
 
         SSLEngine on
-        SSLCertificateFile /home/vagrant/cle_certificat/basketsite11.com.crt
-        SSLCertificateKeyFile /home/vagrant/cle_certificat/basketsite11.com.key
+        SSLCertificateFile /vagrant/cle_certificat/basketsite11.com.crt
+        SSLCertificateKeyFile /vagrant/cle_certificat/basketsite11.com.key
 
 </VirtualHost>
 " > /etc/apache2/sites-available/ssl_config.conf'
