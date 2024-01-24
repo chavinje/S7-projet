@@ -2,6 +2,7 @@
 
 ## install web server with php
 
+
 IP=$(hostname -I | awk '{print $2}')
 
 APT_OPT="-o Dpkg::Progress-Fancy="0" -q -y"
@@ -41,11 +42,17 @@ npm install --save-dev ts-node >> $LOG_FILE 2>&1
 echo "=> [2]: Apache2 configuration"
 # Add configuration of /etc/apache2
 
+# Ajout de deux ports d'écoute : le 223 et le 228
+# Le port 223 pour le frontend
+# Le port 228 pour le myadmin
 sed -i 's/Listen 80/Listen 80\
 Listen 223\
 Listen 228/g' /etc/apache2/ports.conf 
 
+
+
 # File creation frontend.conf
+# Fichier de configuration pour le frontend du site
 touch /etc/apache2/sites-available/frontend.conf
 cat <<EOF > /etc/apache2/sites-available/frontend.conf
 <VirtualHost *:223>
@@ -76,6 +83,7 @@ EOF
 
 
 # File creation myadmin.conf
+# Fichier de configuration pour le phpmyadmin
 touch /etc/apache2/sites-available/myadmin.conf
 cat <<EOF > /etc/apache2/sites-available/myadmin.conf
 <VirtualHost *:228>
@@ -87,6 +95,8 @@ cat <<EOF > /etc/apache2/sites-available/myadmin.conf
 </VirtualHost> 
 EOF
 
+
+# Activation des sites
 a2ensite frontend.conf myadmin.conf
 a2enmod rewrite
 

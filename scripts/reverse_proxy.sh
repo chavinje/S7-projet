@@ -85,7 +85,7 @@ cat <<EOF > /etc/apache2/sites-available/myadmin.conf
 EOF
 
 
-# Activation des 3 fichiers de configuration créer
+# Activation des 3 fichiers de configuration
 a2ensite backend.conf frontend.conf myadmin.conf >> $LOG_FILE 2>&1
 a2dissite  000-default.conf >> $LOG_FILE 2>&1
 
@@ -96,13 +96,3 @@ Listen 3000\
 Listen 228/g' /etc/apache2/ports.conf 
 
 systemctl restart apache2
-
-
-# Création des clé ssh
-mkdir ~/.ssh
-ssh-keygen -t rsa -b 2048 -f ~/.ssh/id_rsa -q -N "" >> $LOG_FILE 2>&1
-
-
-# Copie des clé ssh vers les autres serveur
-sshpass -p "vagrant" ssh-copy-id -i /root/.ssh/id_rsa.pub vagrant@192.168.56.10  >> $LOG_FILE 2>&1
-sshpass -p "vagrant" ssh-copy-id -i /root/.ssh/id_rsa.pub vagrant@192.168.56.12  >> $LOG_FILE 2>&1

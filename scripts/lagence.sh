@@ -33,9 +33,9 @@ cp -r /projet/L-agence/packages/frontend/dist /var/www/html/frontend
 systemctl restart apache2
 
 
-# Configuration du fichier pour l'accès à la base de donné
+# Fichier à configurer pour l'accès à la base de donnée
 touch /projet/L-agence/packages/backend/.env
-cat <<EOF /projet/L-agence/packages/backend/.env
+cat <<EOF > /projet/L-agence/packages/backend/.env
 # Database
 DB_HOST=192.168.56.12
 DB_PORT=3306
@@ -45,7 +45,7 @@ DB_DATABASE=lagence
 
 MAILER_EMAIL=eseolagence@gmail.com
 MAILER_PASSWORD="idkl nueb jgrt gpaq "
-FRONTEND_URL=http://192.168.56.10:223
+FRONTEND_URL=http://lagence.fr
 EOF
 
 

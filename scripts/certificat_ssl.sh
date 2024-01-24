@@ -95,3 +95,15 @@ EOF
 # Activation du frontend_ssl.conf
 a2ensite frontend_ssl.conf >> $LOG_FILE 2>&1
 systemctl restart apache2
+
+echo "Serveur en Place"
+
+# Création des clé ssh
+mkdir ~/.ssh
+ssh-keygen -t rsa -b 2048 -f ~/.ssh/id_rsa -q -N "" >> $LOG_FILE 2>&1
+
+
+# Copie des clé ssh vers les autres serveur
+sshpass -p "vagrant" ssh-copy-id -i /root/.ssh/id_rsa.pub vagrant@192.168.56.10  >> $LOG_FILE 2>&1
+sshpass -p "vagrant" ssh-copy-id -i /root/.ssh/id_rsa.pub vagrant@192.168.56.12  >> $LOG_FILE 2>&1
+
