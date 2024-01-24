@@ -39,6 +39,8 @@ Vagrant.configure("2") do |config|
     web.vm.network :private_network, ip: "192.168.56.10"
     web.vm.network "forwarded_port", guest:80, host:8080,
       auto_correct: true
+    web.vm.network "forwarded_port", guest:3000, host:3000,
+      auto_correct: true
 
     web.vm.provider :virtualbox do |v|
       v.customize ["modifyvm", :id, "--name", "server-web"]
@@ -54,7 +56,6 @@ Vagrant.configure("2") do |config|
       sleep 3
       service ssh restart
     SHELL
-    #web.vm.provision "file", source: "C:/Users/aguib/App.js", destination: "/tmp/web/App.js"
     web.vm.provision "shell", path: "scripts/installation_Systeme_web.sh"
     web.vm.provision "shell", path: "scripts/install_web.sh"
     web.vm.provision "shell", path: "scripts/lagence.sh"
@@ -67,7 +68,7 @@ Vagrant.configure("2") do |config|
     ssh.vm.hostname = "ssh-https"
     ssh.vm.box = "chavinje/fr-bull-64"
     ssh.vm.network :private_network, ip: "192.168.56.14"
-    #ssh.vm.network "public_network", use_dhcp_assigned_default_route: true
+    ssh.vm.network "public_network", use_dhcp_assigned_default_route: true
 
     ssh.vm.provider :virtualbox do |v|
       v.customize ["modifyvm", :id, "--name", "ssh-https"]

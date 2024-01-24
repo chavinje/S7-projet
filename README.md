@@ -1,56 +1,52 @@
-# Projet Infrastructure et Logiciels
+# Projet Infrastructure - README
 
-Les fichiers pour la mise en place du projet Infrastructure et Logiciels su semestre 7
+## Contexte
+Une partie du projet nécessite une infrastructure pour héberger l'application web développée par l'équipe de développement. L'objectif est d'assurer la cohérence de l'infrastructure pour tous les membres de l'équipe, en mettant en œuvre le principe d'Infrastructure As Code (IAC) avec Vagrant de HashiCorp.
 
-## Les pré-requis
+## Périmètre
+Ce document décrit les attentes liées à la mise en place de l'infrastructure, intégrant des exigences fonctionnelles et techniques. Les éléments techniques disponibles comprennent des fichiers basés sur Vagrant pour créer une machine virtuelle VirtualBox avec apache2, php, nodeJs, et MariaDB pour héberger PhpMyadmin.
 
-### Les ressources informatiques
+### Contraintes techniques :
+- Distributions Linux Debian
+- IAC basé sur Vagrant et des scripts shell
+- Limite de ressources par machine virtuelle : 1vCPU, 1Go de RAM, 8Go d'espace disque
+- Tous les services accessibles via une IP unique
 
-Pour faire fonctionner ce Labs il faut prévoir au moins 2 CPU /coeurs et 4Go de Ram (8Go est plus judicieux). L'espace disque est de l'ordre des 16 Go.
-La virtualisation doit être activée sur le PC hôte (machine physique )
-<https://support.bluestacks.com/hc/fr-fr/articles/115003174386-Comment-puis-je-activer-la-virtualisation-VT-sur-mon-PC->
+## Étapes du projet (partie Infrastructure)
+### Étape 1 :
+Mise en place des outils (VirtualBox, Vagrant) : Assurer le bon fonctionnement de la solution pour l'équipe de développement, avec possibilité d'adaptation/amélioration.
 
-### Les applications obligatoires
+### Étape 2 :
+Adaptation de l'infrastructure pour héberger la base de données sur un autre serveur virtuel dans un réseau privé hôte, en prenant en compte les besoins pour l'application JAVA.
 
-* Oracle Virtualbox (version 6.1) (<https://www.virtualbox.org/wiki/Downloads>)
-* Oracle VM VirtualBox Extension Pack (adapté à la version de virtualbox installée précédement)
-* HashiCorp Vagrant (<https://www.vagrantup.com/>)
+### Étape 3 :
+Mise en place d'une solution de sauvegarde des données à partir d'une machine d'un membre de l'équipe pour garantir la pérennité des données. Grâce à mysqldump les donnée son récupérer et envoyée vers le fichier /bdd/
 
-### Les fichiers obligatoires
+### Étape 4 :
+Ajout d'un serveur avec un mode reverse proxy (mod_proxy) pour répartir la charge entre plusieurs nœuds http. Ce serveur prendra en charge le protocole SSL avec un certificat auto-signé (openSSL).
 
-* choisir le zip en haut à gauche
-* cloner avec git : git clone <https://github.com/chavinje/S7-projet-il.git>
+## Lancement
+La commande "vagrant up" sera effectuée, et l'infrastructure résultante sera déployée.
 
-Vous trouverez les reperoires/fichiers :
+## Testez notre Application :
+# *Depuis le server :
+192.168.56.10:223 pour le frontend
+192.168.56.10:228 pour phpmyadmin
+192.168.56.10:3000 pour le backend
 
-* ./Vagrantfile : qui contient l'ensemble des déclarations pour la construction du Labs
-* scripts/install_sys.sh : mise en place des configurations de base sur toutes les VMs
-* scripts/install_bdd.sh : Mise en place de la base de données mysql
-* scripts/install_moodle.sh : Mise en place de l'application Moodle
-* scripts/install_myadmin.sh : Mise en place de l'application PhpMyAdmin
-* scripts/install_web.sh : Mise en place du serveur Apache2
+# *Ceux qui est recommendée :
 
-## Description du Labs
+Pour linux
+sudo nano /etc/hosts
+Ajouter à la dernière ligne l'IP publique puis tabulation puis lagence.fr. Et un Ctrl X et Y.
 
-Le labs est constitué de 1 machine virtuelle Virtualbox basé sur la box fr-bull-64
-Cette machine est reliée à votre machine réelle par un réseau privé hôte via l'adresse 192.168.56.80
 
-* L'application Moodle est accéssible par l'adresse <http://192.168.56.80/moodle>
-* L'application PhpMyAdmin est accéssible par l'adresse <http://192.168.56.80/myadmin>
+Pour windows
+Allez dans ce répertoire "C:\Windows\System32\drivers\etc", modifier hosts avec Vs code. Ajouter à la dernière ligne l'IP publique puis tabulation puis lagence.fr. Faite le comme dans l'exemple en dessous. Sauvegardez-le en le donnant les droits pour. Pour toute question contactez-moi.
 
-## Utilisation des commandes vagrant
+Exemple de l'ajout à faire sur windows ou sur linux :
+192.168.127.12  lagence.fr
 
-Télécharger la box modèle
-    ```vagrant box add chavinje/fr-bull-64```
-
-Activer une VM uniquement (srv-web par exemple)
-    ```vagrant up srv-web```
-
-Se connecter à une VM (firewall par exemple)
-    ```vagrant ssh firewall```
-
-Arréter une VM (victime par exemple)
-    ```vagrant halt victime```
-
-Détruire toutes les VMs (sans demande de confirmation)
-    ```vagrant destroy -f```
+https ou http://lagence.fr/ pour le frontend
+http://lagence.fr:3000/ pour le backend
+http://lagence.fr:228/ pour phpmyadmin
