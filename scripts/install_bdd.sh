@@ -8,9 +8,10 @@ LOG_FILE="/vagrant/logs/install_bdd.log"
 DEBIAN_FRONTEND="noninteractive"
 
 #Utilisateur a créer (si un vide alors pas de création)
-DBNAME="moodle"
-DBUSER="moodle_user"
+DBNAME="lagence"
+DBUSER="admin"
 DBPASSWD="network"
+
 #Fichier sql à injecter (présent dans un sous répertoire)
 DBFILE="files/creation_bdd.sql"
 
@@ -21,7 +22,11 @@ DEBIAN_FRONTEND=noninteractive
 apt-get install -o Dpkg::Progress-Fancy="0" -q -y \
 	mariadb-server \
 	mariadb-client \
-   >> $LOG_FILE 2>&1
+  >> $LOG_FILE 2>&1
+  
+# Donner l'accès au port 3306 depuis n'importe qu'elle addresse
+# on peut remplacer le 192.168.56.12 par le 0.0.0.0
+sed -i 's/127.0.0.1/192.168.56.12/g' /etc/mysql/mariadb.conf.d/50-server.cnf
 
 echo "=> [2]: Configuration du service"
 if [ -n "$DBNAME" ] && [ -n "$DBUSER" ] && [ -n "$DBPASSWD" ] ;then
@@ -36,6 +41,6 @@ if [ -f "$DBFILE" ] ;then
   mysql < /vagrant/$DBFILE \
   >> $LOG_FILE 2>&1
 fi
+systemctl restart mariadb.service
 
 echo "END - install MariaDB"
-
