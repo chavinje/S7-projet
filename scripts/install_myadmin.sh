@@ -7,7 +7,7 @@ IP=$(hostname -I | awk '{print $2}')
 APT_OPT="-o Dpkg::Progress-Fancy="0" -q -y"
 LOG_FILE="/vagrant/logs/install_myadmin.log"
 DEBIAN_FRONTEND="noninteractive"
-MYADMIN_VERSION="5.1.1"
+MYADMIN_VERSION="5.2.1"
 WWW_REP="/var/www/html"
 
 echo "START - Installation of phpMyAdmin - "$IP

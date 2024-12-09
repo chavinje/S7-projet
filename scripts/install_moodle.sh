@@ -13,8 +13,9 @@ echo "START - Configuration Moodle  - "$IP
 
 echo "=> [1]: Download and extract moodle files ..."
 # le moteur de moodle
+# plus de concordance dans le moodle version
 wget -q -O /tmp/moodle.tgz \
-http://download.moodle.org/download.php/direct/stable${MOODLE_VERSION}/moodle-latest-${MOODLE_VERSION}.tgz \
+https://download.moodle.org/download.php/stable405/moodle-4.5.1.tgz \
 >> $LOG_FILE 2>&1
 
 tar xzf /tmp/moodle.tgz -C /var/www/html \

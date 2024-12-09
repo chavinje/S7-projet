@@ -5,7 +5,7 @@ Vagrant.configure("2") do |config|
   # Serveur virtuel de démonstration
   config.vm.define "srv-web" do |machine|
     machine.vm.hostname = "srv-web"
-    machine.vm.box = "chavinje/fr-bull-64"
+    machine.vm.box = "chavinje/fr-book-64"
     machine.vm.network :private_network, ip: "192.168.56.80"
     # Un repertoire partagé est un plus mais demande beaucoup plus
     # de travail - a voir à la fin
@@ -27,7 +27,8 @@ Vagrant.configure("2") do |config|
     machine.vm.provision "shell", path: "scripts/install_sys.sh"
     machine.vm.provision "shell", path: "scripts/install_web.sh"
     machine.vm.provision "shell", path: "scripts/install_bdd.sh"
-    machine.vm.provision "shell", path: "scripts/install_moodle.sh"
     machine.vm.provision "shell", path: "scripts/install_myadmin.sh"
+  # machine.vm.provision "shell", path: "scripts/install_moodle.sh"
+    
   end
 end
